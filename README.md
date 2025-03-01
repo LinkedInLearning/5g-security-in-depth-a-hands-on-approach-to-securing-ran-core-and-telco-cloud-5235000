@@ -1,5 +1,5 @@
-# COURSENAME
-This is the repository for the LinkedIn Learning course `course-name`. The full course is available from [LinkedIn Learning][lil-course-url].
+# 5G Security in Depth: A Hands-On Approach to Securing RAN, Core, and Telco Cloud
+This is the repository for the LinkedIn Learning course `5G Security in Depth: A Hands-On Approach to Securing RAN, Core, and Telco Cloud`. The full course is available from [LinkedIn Learning][lil-course-url].
 
 _See the readme file in the main branch for updated instructions and information._
 ## Instructions
