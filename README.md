@@ -1,44 +1,117 @@
-# 5G Security in Depth: A Hands-On Approach to Securing RAN, Core, and Telco Cloud
-This is the repository for the LinkedIn Learning course `5G Security in Depth: A Hands-On Approach to Securing RAN, Core, and Telco Cloud`. The full course is available from [LinkedIn Learning][lil-course-url].
+# ☁️ 5G Lab: UE Registration, Traffic Capture & Monitoring with Open5GS
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+> This lab guides you through validating **UE registration**, capturing **5G signaling/user-plane traffic**, and analyzing system behavior using **Prometheus**, **Grafana**, and the **EFK logging stack** — all within a **pre-configured Open5GS and UERANSIM environment**.
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+---
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
+## 🎯 Learning Goal
 
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
+**With this content, you will be able to** validate UE registration in a pre-configured Open5GS environment, capture 5G signaling and user traffic using Wireshark, and analyze system behavior through Prometheus-Grafana monitoring and EFK-based log inspection.
 
-To resolve this issue:
-	
-    Add changes to git using this command: git add .
-	Commit changes using this command: git commit -m "some message"
+---
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+## 📌 Prerequisites
 
-## Instructor
+Before starting this lab, ensure you have access to a **configured lab environment** that includes:
 
-Instructor name
+- Open5GS core network (already deployed)
+- UERANSIM components with gNB and UE configuration
+- Prometheus & Grafana stack installed and accessible
+- EFK (Elasticsearch, Fluentd, Kibana) stack installed
+- Basic Linux terminal access with root/sudo privileges
 
-Instructor description
+> ⚠️ This guide assumes the lab environment is already up and running. Deployment instructions are not included.
 
-                            
+---
 
-Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/).
+## 🚀 5G Stack Components
+
+### 🧩 Open5GS
+
+- **Repo:** [Open5GS GitHub](https://github.com/open5gs/open5gs/)
+- **Docs:** [Open5GS Documentation](https://open5gs.org/open5gs/docs/)
+- **Typical Path:** `/home/ubuntu/codebase/5gcore/open5gs`
+
+---
+
+### 📶 UERANSIM
+
+- **Repo:** [UERANSIM GitHub](https://github.com/aligungr/UERANSIM)
+- **Docs:** [UERANSIM Wiki](https://github.com/aligungr/UERANSIM/wiki/Usage)
+
+- UE Registration & Connectivity Test
+
+- # Terminal 1 - gNB
+cd /root/UERANSIM/build/
+./nr-gnb -c ../config/open5gs-gnb.yaml
+
+- # Terminal 2 - UE
+./nr-ue -c ../config/open5gs-ue.yaml
+
+- **Example Commands:**
+
+```bash
+# Run gNB
+./nr-gnb -c config/open5gs-gnb.yaml
+
+# Run UE
+./nr-ue -c config/open5gs-ue.yaml
+
+- **
+
+./nr-cli imsi-208930000000001
+./nr-cli --dump
+ping -I uesimtun0 google.com
+sudo curl --interface uesimtun0 google.com
+
+🧪 Wireshark & Packet Capture
+📦 Capture Packets with tcpdump
+
+# Capture all interfaces and save to file
+sudo tcpdump -i any -w /home/ubuntu/reg.pcap
+
+Analyze with Wireshark
+
+# If not installed
+sudo apt update && sudo apt install wireshark
+
+# Open capture file
+wireshark /home/ubuntu/reg.pcap
 
 
-[0]: # (Replace these placeholder URLs with actual course URLs)
+- ## 📊 Prometheus & Grafana Monitoring
+- ##🚀 Prometheus & Grafana Startup
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: http://
+cd /home/ubuntu/codebase/monitoring/
+./installPromGrafana.sh
+
+To Stop Services
+./uninstallPromGrafana.sh
+
+
+Access Grafana Dashboard
+
+http://<your-lab-ip>:3000
+
+http://<your-lab-ip>:3000
+
+
+cd /home/ubuntu/codebase/efk/
+./InstallEFKStack.sh
+
+Stop Logging Stack
+
+./UninstallEFKStack.sh
+
+View Logs
+If deployed on Kubernetes:
+
+kubectl get pods -n open5gs
+kubectl logs <pod-name> -n open5gs
+
+You can also log into Kibana (default port: 5601) and search logs using structured fields (e.g., container name, log level).
+
+
+
+
 
