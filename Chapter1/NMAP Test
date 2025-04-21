@@ -1,0 +1,47 @@
+# 🔍 Nmap Testing Open5GS Inside AWS EC2
+
+This guide explains how to use Nmap from inside an EC2 instance where Open5GS is installed. You’ll scan internal services, detect potential vulnerabilities, and confirm port exposure — all from a real-world telco cloud setup.
+
+---
+
+## 🛠️ What You Can Do Inside EC2
+
+Running Nmap from within your EC2 instance allows you to scan:
+
+- `localhost` services (e.g., `127.0.0.1`)
+- The EC2 private IP (e.g., `172.31.x.x`)
+- Other internal services (e.g., UERANSIM, Docker containers, or Kubernetes pods)
+
+⚠️ This won't show what the public internet can access, but it's valuable for internal security assessments.
+
+---
+
+## 📍 What to Scan
+
+Assuming Open5GS is running on:
+
+- `127.0.0.1` (loopback)
+- `172.31.22.231` (your EC2 private IP)
+
+---
+
+## 📌 Recommended Nmap Commands (Inside EC2)
+
+### 🔹 Scan TCP Ports for Open5GS Services
+
+```bash
+nmap -sS 127.0.0.1
+
+## SAMPLE OUTPUT
+
+PORT     STATE SERVICE
+22/tcp   open  ssh
+2381/tcp open  compaq-https
+3389/tcp open  ms-wbt-server
+5000/tcp open  upnp
+5001/tcp open  commplex-link
+9099/tcp open  unknown
+9200/tcp open  wap-wsp
+
+
+
