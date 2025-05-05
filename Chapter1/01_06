@@ -30,7 +30,7 @@ Assuming Open5GS is running on:
 ### 🔹 Scan TCP Ports for Open5GS Services
 
 ```bash
-nmap -sS 127.0.0.1
+Step 1 : nmap -sS 127.0.0.1
 
 ## SAMPLE OUTPUT
 
@@ -42,6 +42,99 @@ PORT     STATE SERVICE
 5001/tcp open  commplex-link
 9099/tcp open  unknown
 9200/tcp open  wap-wsp
+
+Identify Services on Suspicious Ports
+
+step 2: sudo lsof -i -P -n | grep LISTEN
+
+## SAMPLE OUTPUT
+
+systemd-r    581 systemd-resolve   14u  IPv4    1540      0t0  TCP 127.0.0.53:53 (LISTEN)
+agent        629        dd-agent   14u  IPv4    1913      0t0  TCP 127.0.0.1:5001 (LISTEN)
+agent        629        dd-agent   19u  IPv4   10530      0t0  TCP 127.0.0.1:5000 (LISTEN)
+process-a    630        dd-agent   10u  IPv4    8635      0t0  TCP 127.0.0.1:6062 (LISTEN)
+process-a    630        dd-agent   12u  IPv4    9824      0t0  TCP 127.0.0.1:6162 (LISTEN)
+trace-age    631        dd-agent   11u  IPv4    7579      0t0  TCP 127.0.0.1:8126 (LISTEN)
+trace-age    631        dd-agent   13u  IPv4    7581      0t0  TCP 127.0.0.1:5012 (LISTEN)
+java         638   elasticsearch  319u  IPv6   14789      0t0  TCP [::1]:9300 (LISTEN)
+java         638   elasticsearch  320u  IPv6   14804      0t0  TCP 127.0.0.1:9300 (LISTEN)
+java         638   elasticsearch  322u  IPv6    7856      0t0  TCP [::1]:9200 (LISTEN)
+java         638   elasticsearch  323u  IPv6    7857      0t0  TCP 127.0.0.1:9200 (LISTEN)
+container    669            root   11u  IPv4    3417      0t0  TCP 127.0.0.1:41901 (LISTEN)
+xrdp-sesm    753            root    7u  IPv6    1612      0t0  TCP [::1]:3350 (LISTEN)
+xrdp         833            xrdp   11u  IPv6   15744      0t0  TCP *:3389 (LISTEN)
+sshd         879            root    3u  IPv4    7079      0t0  TCP *:3022 (LISTEN)
+sshd         879            root    4u  IPv6    7081      0t0  TCP *:3022 (LISTEN)
+sshd         879            root    5u  IPv4    7083      0t0  TCP *:22 (LISTEN)
+sshd         879            root    6u  IPv6    7085      0t0  TCP *:22 (LISTEN)
+kubelet     2006            root   15u  IPv4   11813      0t0  TCP 127.0.0.1:10248 (LISTEN)
+kubelet     2006            root   16u  IPv6   17154      0t0  TCP *:10250 (LISTEN)
+kube-apis   2320            root    3u  IPv6    9943      0t0  TCP *:6443 (LISTEN)
+etcd        2322            root    7u  IPv4   18302      0t0  TCP 172.31.22.231:2380 (LISTEN)
+etcd        2322            root    8u  IPv4   18306      0t0  TCP 127.0.0.1:2379 (LISTEN)
+etcd        2322            root    9u  IPv4   18307      0t0  TCP 172.31.22.231:2379 (LISTEN)
+etcd        2322            root   16u  IPv4   12168      0t0  TCP 127.0.0.1:2381 (LISTEN)
+
+
+step 3: Confirm Open5GS Port Exposure
+
+Now check with Open5gs
+
+Check if Open5GS is running and what ports it’s listening on:
+●	AMF, SMF, WebUI: Usually ports like 3000, 80, 38412 (SCTP), 2152 (GTP-U)
+
+●	MongoDB: 27017
+
+sudo ss -tulnp | grep -E 'open5gs|38412|2152|3000'
+
+The output will be as follows 👍
+
+udp   UNCONN 0      0           172.31.22.231:2152       0.0.0.0:*    users:(("nr-gnb",pid=171864,fd=5))
+tcp   LISTEN 0      4096                    *:30001            *:*    users:(("worker",pid=18427,fd=11))
+
+
+
+What the ss Output Tells Us:
+Protocol	Port	Bound IP	Service	Status
+UDP	2152	172.31.22.231	nr-gnb	✅ GTP-U port (data plane) is active — but from the gNB, not Open5GS UPF
+TCP	30001	*	worker	❓ Possibly a containerized service or NodePort (maybe from Kubernetes)
+
+
+
+Step 4: Blocking unused ports
+
+If you're not using ports like 2381, 3389, 5000, 9200, etc.:
+●	Stop the associated services:
+sudo systemctl stop <service-name>
+sudo systemctl disable <service-name>
+
+
+Or block them with iptables:
+
+sudo iptables -A INPUT -p tcp --dport 5000 -j DROP
+
+step 3: Confirm Open5GS Port Exposure
+
+Now check with Open5gs
+
+Check if Open5GS is running and what ports it’s listening on:
+●	AMF, SMF, WebUI: Usually ports like 3000, 80, 38412 (SCTP), 2152 (GTP-U)
+
+●	MongoDB: 27017
+
+sudo ss -tulnp | grep -E 'open5gs|38412|2152|3000'
+
+The output will be as follows 👍
+
+udp   UNCONN 0      0           172.31.22.231:2152       0.0.0.0:*    users:(("nr-gnb",pid=171864,fd=5))
+tcp   LISTEN 0      4096                    *:30001            *:*    users:(("worker",pid=18427,fd=11))
+
+
+
+What the ss Output Tells Us:
+Protocol	Port	Bound IP	Service	Status
+UDP	2152	172.31.22.231	nr-gnb	✅ GTP-U port (data plane) is active — but from the gNB, not Open5GS UPF
+TCP	30001	*	worker	❓ Possibly a containerized service or NodePort (maybe from Kubernetes)
 
 
 
