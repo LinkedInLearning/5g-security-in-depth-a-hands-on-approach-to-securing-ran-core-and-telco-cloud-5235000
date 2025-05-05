@@ -2,7 +2,7 @@
 
 # STEP 2: Register the GNB and UE
 
-# STEP 3: Verify the NAS PDU message in initial registration message
+# STEP 3: Verify the NAS PDU message in initial registration message under 5gs mobile entity parameter
 
 # STEP 4: Compare the messages between Null Scheme and Profile A scheme and understand the difference
  
