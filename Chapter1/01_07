@@ -141,5 +141,21 @@ Protocol	Port	Bound IP	Service	Status
 UDP	2152	172.31.22.231	nr-gnb	✅ GTP-U port (data plane) is active — but from the gNB, not Open5GS UPF
 TCP	30001	*	worker	❓ Possibly a containerized service or NodePort (maybe from Kubernetes)
 
+Step4 : Blocking the port
+
+How to Block Public Access to Port 9099 (if open)
+
+Recommended: Use AWS Security Group Rules
+Go to EC2 > Security Groups in the AWS console.
+
+Find the Security Group attached to this instance.
+
+Under Inbound rules, remove or deny access to port 9099.
+
+You can also restrict access to only specific IPs or CIDR ranges if needed.
+
+sudo iptables -A INPUT -p tcp --dport 9099 -j DROP
+
+
 
 
