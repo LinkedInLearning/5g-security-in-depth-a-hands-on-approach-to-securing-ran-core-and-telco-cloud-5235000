@@ -76,7 +76,12 @@ etcd        2322            root    9u  IPv4   18307      0t0  TCP 172.31.22.231
 etcd        2322            root   16u  IPv4   12168      0t0  TCP 127.0.0.1:2381 (LISTEN)
 
 
-step 3: Confirm Open5GS Port Exposure
+step3: to check if the open port is exposed to the public IP
+
+nmap -p 9099 3.20.86.100
+
+
+step 3 (Port exposure): Confirm Open5GS Port Exposure
 
 Now check with Open5gs
 
