@@ -67,41 +67,10 @@ send(pkt)
 
 🕵️ Step 4: TTP Mapping Table
 
-Parameter
+Parameter, Risk Example , TTP Mapping, SUPI/SUCI reuse, Replay of UE identity, Credential Access → Identity Impersonation
 
-Risk Example
+AUTN/RES* mismatch , Faked auth response , Defense Evasion → Protocol Manipulation
 
-TTP Mapping
-
-SUPI/SUCI reuse
-
-Replay of UE identity
-
-Credential Access → Identity Impersonation
-
-AUTN/RES* mismatch
-
-Faked auth response
-
-Defense Evasion → Protocol Manipulation
-
-Duplicate UE NGAP ID
-
-Zombie session replay
-
-Persistence → Session Fixation
-
-Reused PDU Session ID
-
-Hijacked tunnel reuse
-
-Initial Access → Tunneling Protocol Abuse
-
-Unusual QoS/DNN
-
-Suspicious data exfiltration
-
-Exfiltration → Over Command & Control Channel
 
 🧾 Expected Deliverables
 
@@ -113,15 +82,7 @@ Exfiltration → Over Command & Control Channel
 
 🧰 Tools Used
 
-Wireshark
-
-tcpdump
-
-Scapy
-
-Open5GS
-
-MITRE FIGHT
+Wireshark, tcpdump , Scapy, Open5GS, MITRE FIGHT
 
 🚀 Suggested Extensions
 
