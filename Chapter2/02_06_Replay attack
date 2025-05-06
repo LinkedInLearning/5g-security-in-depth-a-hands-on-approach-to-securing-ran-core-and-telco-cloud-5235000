@@ -11,7 +11,17 @@ A functional UERANSIM (UE + gNB simulator)
 
 Access to tcpdump, Wireshark, and Scapy
 
-STEP 1 - Open the Registration messsage, get the NAS PDU Payload , AMF IP and port details
+STEP 1 - Open the Registration messsage, and use the console to get the payload data and below information.
+
+| Info                      | Value                 |
+| ------------------------- | --------------------- |
+| **AMF Pod IP**            | `10.246.198.80`       |
+| **Namespace**             | `open5gs`             |
+| **SCTP NodePort service** | `30412` on host IP    |
+| Cluster ip      **        | `10.105.230.45:38412` |
+| **Pod's SCTP port**       | `38412`               |
+
+kubectl get pod -n open5gs -o wide | grep amf
 
 Step 2: Craft a Scappy message to send towards AMF
 
