@@ -1,3 +1,5 @@
+Objective: Enable SUCI Profile A Encryption, read the registration message to see the difference.
+
 # STEP 1: Register the GNB and UE
 
 # STEP 2: Check the values of the SUCI Parameters in UE File - Profile A Scheme should be 1
