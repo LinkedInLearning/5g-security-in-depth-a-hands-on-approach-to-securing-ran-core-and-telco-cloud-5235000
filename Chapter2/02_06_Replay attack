@@ -1,9 +1,8 @@
-02_06 Lab: Investigating Authentication Flows & Threat Detection
+02_06 Lab: Investigating Authentication Flows and execute Replay attack
 
 🎯 Learning Goal
 
-"Investigate authentication call flows through live attack simulations and packet analysis to understand TTPs and improve incident response."
-
+"Investigate authentication call flows through live attack simulations and packet analysis to understand replay attack and some mitigation measures
 🛠️ Prerequisites
 
 A working Open5GS 5G Core setup (preferably in Kubernetes)
