@@ -1,0 +1,75 @@
+{
+	"nfInstanceId":	"1ad5ed78-7ca0-41ef-816c-000099998899",
+	"nfType":	"SMF",
+	"nfStatus":	"REGISTERED",
+	"fqdn":	"open5gs-core-smf",
+	"allowedNfTypes":	["AMF", "SCP", "SMF"],
+	"priority":	0,
+	"capacity":	100,
+	"load":	0,
+	"smfInfo":	{
+		"sNssaiSmfInfoList":	[{
+				"sNssai":	{
+					"sst":	1,
+					"sd":	"000001"
+				},
+				"dnnSmfInfoList":	[{
+						"dnn":	"internet"
+					}, {
+						"dnn":	"ims"
+					}]
+			}, {
+				"sNssai":	{
+					"sst":	1
+				},
+				"dnnSmfInfoList":	[{
+						"dnn":	"internet"
+					}, {
+						"dnn":	"ims"
+					}]
+			}, {
+				"sNssai":	{
+					"sst":	2
+				},
+				"dnnSmfInfoList":	[{
+						"dnn":	"internet"
+					}, {
+						"dnn":	"ims"
+					}]
+			}, {
+				"sNssai":	{
+					"sst":	3
+				},
+				"dnnSmfInfoList":	[{
+						"dnn":	"internet"
+					}, {
+						"dnn":	"ims"
+					}]
+			}],
+		"taiList":	[{
+				"plmnId":	{
+					"mcc":	"208",
+					"mnc":	"93"
+				},
+				"tac":	"000007"
+			}]
+	},
+	"nfServiceList":	{
+		"1adb40b6-7ca0-41ef-816c-a5270a35062b":	{
+			"serviceInstanceId":	"1adb40b6-7ca0-41ef-816c-a5270a35062b",
+			"serviceName":	"nsmf-pdusession",
+			"versions":	[{
+					"apiVersionInUri":	"v1",
+					"apiFullVersion":	"1.0.0"
+				}],
+			"scheme":	"http",
+			"nfServiceStatus":	"REGISTERED",
+			"fqdn":	"open5gs-core-smf",
+			"allowedNfTypes":	["AMF"],
+			"priority":	0,
+			"capacity":	100,
+			"load":	0
+		}
+	},
+	"nfProfileChangesSupportInd":	true
+}
