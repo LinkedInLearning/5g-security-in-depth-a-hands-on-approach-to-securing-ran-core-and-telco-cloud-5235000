@@ -1,4 +1,4 @@
-Regisration of a Rogue NF
+objective: Regisration of a Rogue NF and observing the behavior and impact
 
 Step 1: Disable the oAuth2 parameter in the configuration file
 
