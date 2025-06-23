@@ -1,36 +1,17 @@
 # 5G Security in Depth: A Hands-On Approach to Securing RAN, Core, and Telco Cloud
 This is the repository for the LinkedIn Learning course `5G Security in Depth: A Hands-On Approach to Securing RAN, Core, and Telco Cloud`. The full course is available from [LinkedIn Learning][lil-course-url].
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+![lil-thumbnail-url]
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+## Course Description
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
-
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
-
-To resolve this issue:
-	
-    Add changes to git using this command: git add .
-	Commit changes using this command: git commit -m "some message"
-
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+Unlock the secrets to securing next-generation telecom networks with this in-depth course. Instructor Taha Sajid takes a deep dive into RAN, Core, and NFVI architectures, exploring vulnerabilities and showing how to safeguard critical infrastructure. Through hands-on labs and real-world simulations, master threat modeling, zero-trust implementations, and incident response using industry-standard tools. Whether you're securing Open RAN interfaces or hardening virtualized components, this course equips you with practical skills to tackle emerging 5G threats. Join Taha to future-proof your expertise in the evolving world of 5G security.
 
 ## Instructor
 
-Instructor name
+Taha Sajid
 
-Instructor description
+Founder of XecurityPulse | Principal Architect | Author | EB1A Coach
 
                             
 
@@ -39,6 +20,6 @@ Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learn
 
 [0]: # (Replace these placeholder URLs with actual course URLs)
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: http://
+[lil-course-url]: https://www.linkedin.com/learning/5g-security-in-depth-a-hands-on-approach-to-securing-ran-core-and-telco-cloud
+[lil-thumbnail-url]: https://media.licdn.com/dms/image/v2/D4E0DAQENPhtSl4Ut-A/learning-public-crop_675_1200/B4EZcypQv7H0AY-/0/1748901367390?e=2147483647&v=beta&t=cVCsnhlJLS-pzT1UXxRRNh5f5ez_acaHDe9oMEWOL-Q
 
